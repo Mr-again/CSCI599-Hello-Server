@@ -1,11 +1,11 @@
-package main
+package models
 
 import (
 	"github.com/astaxie/beego/orm"
 )
 
 type User struct {
-	UserId     int `orm:"PK"`
+	UserId     int `orm:"PK;auto"`
 	UserName   string
 	MacAddress string
 	Money      int
@@ -17,11 +17,11 @@ type User struct {
 }
 
 type Level struct {
-	LevelId  int `orm:"PK"`
+	LevelId  int `orm:"PK;auto"`
 	TryNum   int
 	PassNum  int
 	ThumbNum int
-	User     *User `orm:"rel(fk)"`
+	Maker     *User `orm:"rel(fk)"`
 	MapData  string
 }
 
