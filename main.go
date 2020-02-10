@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "./Services"
 	"./dao"
 	"fmt"
 	"github.com/astaxie/beego/orm"
