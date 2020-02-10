@@ -49,3 +49,23 @@ func (myOrm MyOrm) GetUsersByTotalScore(page int) ([]models.User, error) {
 func (myOrm MyOrm) GetLevelByMakerId(makerId string) (models.Level, error) {
 	return models.Level{}, nil
 }
+
+func (myOrm MyOrm) GetLevels(page int) ([]models.Level, error) {
+	return nil, nil
+}
+
+func (myOrm MyOrm) AddUser(userName string, macAddr string, money int, buildScore int, gameScore int, totalScore int, slotNum int) (models.User, error) {
+	return models.User{}, nil
+}
+
+func (myOrm MyOrm) AddLevel(tryNum int, passNum int, thumbNum int, makerId int, mapData string) (models.Level, error) {
+	return models.Level{}, nil
+}
+
+func (myOrm MyOrm) UpdateUser(user models.User, money int, buildScore int, gameScore int, totalScore int, slotNum int) (models.User, error) {
+	return models.User{}, nil
+}
+
+func (myOrm MyOrm) UpdateLevel(level models.Level, tryNum int, passNum int, thumbNum int) (models.Level, error) {
+	return models.Level{}, nil
+}
