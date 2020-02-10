@@ -1,7 +1,8 @@
 package dao
 
 import (
-	_ "../models"
+	"../models"
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
@@ -23,6 +24,28 @@ func init() {
 	orm.RunCommand()
 }
 
-func(myOrm MyOrm)getUserByMacAddr(){
+func (myOrm MyOrm) GetUserByMacAddr(macAddr string) (models.User, error) {
+	o := myOrm.O
+	user := models.User{}
+	err := o.QueryTable("user").Filter("mac_address", macAddr).One(&user)
+	if err != nil {
+		fmt.Errorf("GetUserByMacAddr fail: %v", err)
+	}
+	return user, err
+}
 
+func (myOrm MyOrm) GetUsersByBuildScore(page int) ([]models.User, error) {
+	return nil, nil
+}
+
+func (myOrm MyOrm) GetUsersByGameScore(page int) ([]models.User, error) {
+	return nil, nil
+}
+
+func (myOrm MyOrm) GetUsersByTotalScore(page int) ([]models.User, error) {
+	return nil, nil
+}
+
+func (myOrm MyOrm) GetLevelByMakerId(makerId string) (models.Level, error) {
+	return models.Level{}, nil
 }

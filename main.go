@@ -2,6 +2,7 @@ package main
 
 import (
 	"./dao"
+	"fmt"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -16,6 +17,8 @@ func init() {
 }
 
 func main() {
+	user, _ := myOrm.GetUserByMacAddr("mac2")
+	fmt.Println(user)
 	//user := models.User{UserId: 1}
 	//err := myOrm.O.Read(&user)
 	//if err == orm.ErrNoRows {
