@@ -7,7 +7,9 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-
+type MyOrm struct {
+	O orm.Ormer
+}
 
 func init() {
 	mysqlUser := beego.AppConfig.String("mysqluser")
@@ -19,4 +21,8 @@ func init() {
 	orm.RegisterDataBase("default", "mysql", dataSource)
 	orm.RunSyncdb("default", false, false)
 	orm.RunCommand()
+}
+
+func(myOrm MyOrm)getUserByMacAddr(){
+
 }

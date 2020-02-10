@@ -1,26 +1,28 @@
 package main
 
 import (
-	_ "./dao"
-	"./models"
-	"fmt"
+	"./dao"
 	"github.com/astaxie/beego/orm"
 )
 
 var (
-	DB orm.Ormer
+	myOrm dao.MyOrm
 )
 
+func init() {
+	myOrm = dao.MyOrm{}
+	myOrm.O = orm.NewOrm()
+	myOrm.O.Using("default")
+}
+
 func main() {
-	DB = orm.NewOrm()
-	DB.Using("default")
-	user := models.User{UserId: 1}
-	err := DB.Read(&user)
-	if err == orm.ErrNoRows {
-		fmt.Println("查询不到")
-	} else if err == orm.ErrMissPK {
-		fmt.Println("找不到主键")
-	} else {
-		fmt.Println(user.UserId, user.UserName)
-	}
+	//user := models.User{UserId: 1}
+	//err := myOrm.O.Read(&user)
+	//if err == orm.ErrNoRows {
+	//	fmt.Println("查询不到")
+	//} else if err == orm.ErrMissPK {
+	//	fmt.Println("找不到主键")
+	//} else {
+	//	fmt.Println(user.UserId, user.UserName)
+	//}
 }
