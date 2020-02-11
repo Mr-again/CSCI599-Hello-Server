@@ -5,14 +5,12 @@ import (
 	"github.com/astaxie/beego"
 )
 
-
-
 func init() {
 	beego.Run()
 }
 
 func main() {
-	//user, _ := myOrm.GetUserByMacAddr("mac2")
+	//user, _ := myOrm.GetUsersByBuildScore(100)
 	//fmt.Println(user)
 
 }

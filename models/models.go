@@ -21,9 +21,10 @@ type Level struct {
 	TryNum   int
 	PassNum  int
 	ThumbNum int
-	Maker     *User `orm:"rel(fk)"`
+	Maker    *User `orm:"rel(fk)"`
 	MapData  string
 }
+
 
 func init() {
 	// 需要在init中注册定义的model
