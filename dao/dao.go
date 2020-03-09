@@ -71,12 +71,12 @@ func (myOrm MyOrm) GetLevelByMakerId(makerId int) ([]models.Level, error) {
 	if err != nil {
 		fmt.Errorf("get level by maker id fail: %v", err)
 	}
-	for _, l := range level {
-		err := o.QueryTable("user").Filter("user_id", makerId).One(l.Maker)
-		if err != nil {
-			fmt.Errorf("do not exist this user with id %d: %v", makerId, err)
-		}
-	}
+	//for _, l := range level {
+	//	err := o.QueryTable("user").Filter("user_id", makerId).One(l.Maker)
+	//	if err != nil {
+	//		fmt.Errorf("do not exist this user with id %d: %v", makerId, err)
+	//	}
+	//}
 	return level, err
 }
 
@@ -87,10 +87,10 @@ func (myOrm MyOrm) GetLevelsByLevelId(levelId int) (models.Level, error) {
 	if err != nil {
 		fmt.Errorf("get level by level id fail: %v", err)
 	}
-	err = o.QueryTable("user").Filter("user_id", level).One(level.Maker)
-	if err != nil {
-		fmt.Errorf("do not exist this user with id %d: %v", level.Maker.UserId, err)
-	}
+	//err = o.QueryTable("user").Filter("user_id", level).One(level.Maker)
+	//if err != nil {
+	//	fmt.Errorf("do not exist this user with id %d: %v", level.Maker.UserId, err)
+	//}
 	return level, err
 }
 
@@ -99,16 +99,14 @@ func (myOrm MyOrm) AddUser(userName string, macAddr string, money int,
 	o := myOrm.O
 	user := models.User{UserName:userName, MacAddress:macAddr, Money:money,
 		BuildScore:buildScore, GameScore:gameScore, TotalScore:totalScore, SlotNum:slotNum}
-	pi, _ := o.QueryTable("user").PrepareInsert()
-	_, err := pi.Insert(user)
+	_, err := o.Insert(&user)
 	return user, err
 }
 
 func (myOrm MyOrm) AddLevel(tryNum int, passNum int, thumbNum int, makerId int, mapData string) (models.Level, error) {
 	o := myOrm.O
-	level := models.Level{TryNum:tryNum,PassNum:passNum,ThumbNum:thumbNum,MapData:mapData}
-	pi, _ := o.QueryTable("level").PrepareInsert()
-	_, err := pi.Insert(level)
+	level := models.Level{TryNum:tryNum, PassNum:passNum, ThumbNum:thumbNum, MapData:mapData, IdOfMaker:makerId}
+	_, err := o.Insert(&level)
 	return level, err
 }
 

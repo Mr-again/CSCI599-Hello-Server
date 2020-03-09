@@ -74,7 +74,23 @@ func (ctrl *UserController) Get() {
 }
 
 func (ctrl *UserController) Post() {
-	//ctrl.Ctx.Request()
+	name := ctrl.GetString("name")
+	if name == ""{
+		name = "new_user"
+	}
+	macAddr := ctrl.GetString("mac")
+	if macAddr == ""{
+		fmt.Errorf("user with name %s should have mac address", name)
+	}
+	money, _ := ctrl.GetInt("money")
+	buildScore, _ := ctrl.GetInt("build_score")
+	gameScore, _ := ctrl.GetInt("game_score")
+	totalScore, _ := ctrl.GetInt("total_score")
+	slotNum, _ := ctrl.GetInt("slot_num")
+	_, err := myOrm.AddUser(name, macAddr, money, buildScore, gameScore, totalScore, slotNum)
+	if err != nil {
+		fmt.Errorf("insert user fail, %v", err)
+	}
 }
 
 func (ctrl *LevelController) Get() {
@@ -112,7 +128,19 @@ func (ctrl *LevelController) Get() {
 }
 
 func (ctrl *LevelController) Post() {
-
+	tryNum, _ := ctrl.GetInt("try_num")
+	passNum, _ := ctrl.GetInt("pass_num")
+	thumbNum, _ := ctrl.GetInt("thumb_num")
+	makerId, _ := ctrl.GetInt("id_of_maker")
+	mapData := ctrl.GetString("map_data")
+	if mapData == ""{
+		mapData = "No Data"
+	}
+	fmt.Println(tryNum, passNum, thumbNum, makerId, mapData)
+	_, err := myOrm.AddLevel(tryNum, passNum, thumbNum, makerId, mapData)
+	if err != nil {
+		fmt.Errorf("insert level fail, %v", err)
+	}
 }
 
 func init() {

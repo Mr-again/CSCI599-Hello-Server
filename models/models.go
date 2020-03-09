@@ -21,6 +21,7 @@ type Level struct {
 	TryNum   int
 	PassNum  int
 	ThumbNum int
+	IdOfMaker  int
 	Maker    *User `orm:"rel(fk)"`
 	MapData  string
 }
