@@ -106,14 +106,45 @@ func (myOrm MyOrm) AddUser(userName string, macAddr string, money int,
 func (myOrm MyOrm) AddLevel(tryNum int, passNum int, thumbNum int, makerId int, mapData string) (models.Level, error) {
 	o := myOrm.O
 	level := models.Level{TryNum:tryNum, PassNum:passNum, ThumbNum:thumbNum, MapData:mapData, IdOfMaker:makerId}
+	myOrm.UpdateUser(makerId, 0, 0, 0, 0, -1)
 	_, err := o.Insert(&level)
 	return level, err
 }
 
-func (myOrm MyOrm) UpdateUser(user models.User, money int, buildScore int, gameScore int, totalScore int, slotNum int) (models.User, error) {
-	return models.User{}, nil
+func (myOrm MyOrm) UpdateUser(user_id int, money int, build_score int, game_score int, total_score int, slot_num int) (models.User, error) {
+	o := myOrm.O
+	user := models.User{UserId:user_id}
+	if o.Read(&user) == nil{
+		user.Money += money
+		user.BuildScore += build_score
+		user.GameScore += game_score
+		user.TotalScore += total_score
+		user.SlotNum += slot_num
+		_, err := o.Update(&user)
+		if err != nil {
+			fmt.Errorf("update user by user id fail: %v", err)
+		}
+	}
+	return user, nil
 }
 
-func (myOrm MyOrm) UpdateLevel(level models.Level, tryNum int, passNum int, thumbNum int) (models.Level, error) {
-	return models.Level{}, nil
+func (myOrm MyOrm) UpdateLevel(level_id int, try bool, pass bool, thumb bool) (models.Level, error) {
+	o := myOrm.O
+	level := models.Level{LevelId:level_id}
+	if o.Read(&level) == nil{
+		if try{
+			level.TryNum++
+		}
+		if pass{
+			level.PassNum++
+		}
+		if thumb{
+			level.ThumbNum++
+		}
+		_, err := o.Update(&level)
+		if err != nil {
+			fmt.Errorf("update level by level id fail: %v", err)
+		}
+	}
+	return level, nil
 }

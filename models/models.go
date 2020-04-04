@@ -13,7 +13,7 @@ type User struct {
 	GameScore  int
 	TotalScore int
 	SlotNum    int
-	Levels     []*Level `orm:"reverse(many)"`
+	//Levels     []*Level `orm:"reverse(many)"`
 }
 
 type Level struct {
@@ -22,7 +22,7 @@ type Level struct {
 	PassNum  int
 	ThumbNum int
 	IdOfMaker  int
-	Maker    *User `orm:"rel(fk)"`
+	//Maker    *User `orm:"rel(fk)"`
 	MapData  string
 }
 

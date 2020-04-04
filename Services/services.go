@@ -74,22 +74,36 @@ func (ctrl *UserController) Get() {
 }
 
 func (ctrl *UserController) Post() {
-	name := ctrl.GetString("name")
-	if name == ""{
-		name = "new_user"
-	}
-	macAddr := ctrl.GetString("mac")
-	if macAddr == ""{
-		fmt.Errorf("user with name %s should have mac address", name)
-	}
-	money, _ := ctrl.GetInt("money")
-	buildScore, _ := ctrl.GetInt("build_score")
-	gameScore, _ := ctrl.GetInt("game_score")
-	totalScore, _ := ctrl.GetInt("total_score")
-	slotNum, _ := ctrl.GetInt("slot_num")
-	_, err := myOrm.AddUser(name, macAddr, money, buildScore, gameScore, totalScore, slotNum)
-	if err != nil {
-		fmt.Errorf("insert user fail, %v", err)
+	update, _ := ctrl.GetBool("update")
+	if update {
+		user_id, _ := ctrl.GetInt("user_id")
+		money, _ := ctrl.GetInt("money")
+		buildScore, _ := ctrl.GetInt("build_score")
+		gameScore, _ := ctrl.GetInt("game_score")
+		totalScore, _ := ctrl.GetInt("total_score")
+		slotNum, _ := ctrl.GetInt("slot_num")
+		_, err := myOrm.UpdateUser(user_id, money, buildScore, gameScore, totalScore, slotNum)
+		if err != nil {
+			fmt.Errorf("update user fail, %v", err)
+		}
+	} else {
+		name := ctrl.GetString("name")
+		if name == "" {
+			name = "new_user"
+		}
+		macAddr := ctrl.GetString("mac")
+		if macAddr == "" {
+			fmt.Errorf("user with name %s should have mac address", name)
+		}
+		money, _ := ctrl.GetInt("money")
+		buildScore, _ := ctrl.GetInt("build_score")
+		gameScore, _ := ctrl.GetInt("game_score")
+		totalScore, _ := ctrl.GetInt("total_score")
+		slotNum, _ := ctrl.GetInt("slot_num")
+		_, err := myOrm.AddUser(name, macAddr, money, buildScore, gameScore, totalScore, slotNum)
+		if err != nil {
+			fmt.Errorf("insert user fail, %v", err)
+		}
 	}
 }
 
@@ -128,18 +142,30 @@ func (ctrl *LevelController) Get() {
 }
 
 func (ctrl *LevelController) Post() {
-	tryNum, _ := ctrl.GetInt("try_num")
-	passNum, _ := ctrl.GetInt("pass_num")
-	thumbNum, _ := ctrl.GetInt("thumb_num")
-	makerId, _ := ctrl.GetInt("id_of_maker")
-	mapData := ctrl.GetString("map_data")
-	if mapData == ""{
-		mapData = "No Data"
-	}
-	fmt.Println(tryNum, passNum, thumbNum, makerId, mapData)
-	_, err := myOrm.AddLevel(tryNum, passNum, thumbNum, makerId, mapData)
-	if err != nil {
-		fmt.Errorf("insert level fail, %v", err)
+	update, _ := ctrl.GetBool("update")
+	if update{
+		level_id, _ := ctrl.GetInt("level_id")
+		try, _ := ctrl.GetBool("try")
+		pass, _ := ctrl.GetBool("pass")
+		thumb, _ := ctrl.GetBool("thumb")
+		fmt.Print(level_id, try, pass, thumb)
+		_, err := myOrm.UpdateLevel(level_id, try, pass, thumb);
+		if err != nil {
+			fmt.Errorf("insert level fail, %v", err)
+		}
+	} else {
+		tryNum, _ := ctrl.GetInt("try_num")
+		passNum, _ := ctrl.GetInt("pass_num")
+		thumbNum, _ := ctrl.GetInt("thumb_num")
+		makerId, _ := ctrl.GetInt("id_of_maker")
+		mapData := ctrl.GetString("map_data")
+		if mapData == ""{
+			mapData = "No Data"
+		}
+		_, err := myOrm.AddLevel(tryNum, passNum, thumbNum, makerId, mapData)
+		if err != nil {
+			fmt.Errorf("insert level fail, %v", err)
+		}
 	}
 }
 
