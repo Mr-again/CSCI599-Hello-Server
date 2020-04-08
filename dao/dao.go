@@ -6,6 +6,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
+	"time"
 )
 
 type MyOrm struct {
@@ -29,13 +30,13 @@ func init() {
 		fmt.Println("here2")
 		fmt.Errorf("Register Database %v", err)
 	}
-	//mdb, err := orm.GetDB("default")
-	//if err != nil {
-	//	panic(fmt.Errorf("get db error:%s", err))
-	//}
-	//mdb.SetConnMaxLifetime(time.Second * 20)
-	//mdb.SetMaxIdleConns(10)
-	//mdb.SetMaxOpenConns(30)
+	mdb, err := orm.GetDB("default")
+	if err != nil {
+		panic(fmt.Errorf("get db error:%s", err))
+	}
+	mdb.SetConnMaxLifetime(time.Duration(4 * 3600) * time.Second)
+	mdb.SetMaxIdleConns(10)
+	mdb.SetMaxOpenConns(30)
 	err2 := orm.RunSyncdb("default", false, false)
 	if err2 != nil {
 		fmt.Println("here3")
