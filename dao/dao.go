@@ -18,9 +18,29 @@ func init() {
 	mysqlDb := beego.AppConfig.String("mysqldb")
 	mysqlUrl := beego.AppConfig.String("mysqlurl")
 	dataSource := mysqlUser + ":" + mysqlPass + "@" + "tcp(" + mysqlUrl + ")/" + mysqlDb + "?charset=utf8"
-	orm.RegisterDriver("mysql", orm.DRMySQL)
-	orm.RegisterDataBase("default", "mysql", dataSource)
-	orm.RunSyncdb("default", false, false)
+	fmt.Println(dataSource)
+	err1 := orm.RegisterDriver("mysql", orm.DRMySQL)
+	if err1 != nil {
+		fmt.Println("here1")
+		fmt.Errorf("Register Driver %v", err1)
+	}
+	err := orm.RegisterDataBase("default", "mysql", dataSource)
+	if err != nil {
+		fmt.Println("here2")
+		fmt.Errorf("Register Database %v", err)
+	}
+	//mdb, err := orm.GetDB("default")
+	//if err != nil {
+	//	panic(fmt.Errorf("get db error:%s", err))
+	//}
+	//mdb.SetConnMaxLifetime(time.Second * 20)
+	//mdb.SetMaxIdleConns(10)
+	//mdb.SetMaxOpenConns(30)
+	err2 := orm.RunSyncdb("default", false, false)
+	if err2 != nil {
+		fmt.Println("here3")
+		fmt.Errorf("Run Syncdb %v", err2)
+	}
 	orm.RunCommand()
 }
 
@@ -106,7 +126,7 @@ func (myOrm MyOrm) AddUser(userName string, macAddr string, money int,
 func (myOrm MyOrm) AddLevel(tryNum int, passNum int, thumbNum int, makerId int, mapData string) (models.Level, error) {
 	o := myOrm.O
 	level := models.Level{TryNum:tryNum, PassNum:passNum, ThumbNum:thumbNum, MapData:mapData, IdOfMaker:makerId}
-	myOrm.UpdateUser(makerId, 0, 0, 0, 0, -1)
+	//myOrm.UpdateUser(makerId, 0, 0, 0, 0, -1)
 	_, err := o.Insert(&level)
 	return level, err
 }
