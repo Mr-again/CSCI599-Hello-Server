@@ -117,6 +117,7 @@ func (ctrl *LevelController) Get() {
 		{
 			makerId, _ := ctrl.GetInt("maker_id")
 			level, err := myOrm.GetLevelByMakerId(makerId)
+			//fmt.Println(level)
 			if err != nil {
 				fmt.Errorf("GetLevel fail, %v", err)
 			}
@@ -133,6 +134,15 @@ func (ctrl *LevelController) Get() {
 			ctrl.Ctx.Output.JSON(level, true, true)
 			break
 		}
+	case 2:
+		{
+			level, err := myOrm.GetAllLevels()
+			if err != nil {
+				fmt.Errorf("GetLevel fail, %v", err)
+			}
+			ctrl.Ctx.Output.JSON(level, true, true)
+			break
+		}
 	default:
 		{
 			fmt.Errorf("undefined type for level")
@@ -143,6 +153,7 @@ func (ctrl *LevelController) Get() {
 
 func (ctrl *LevelController) Post() {
 	update, _ := ctrl.GetBool("update")
+	delete, _ := ctrl.GetBool("delete")
 	if update{
 		level_id, _ := ctrl.GetInt("level_id")
 		try, _ := ctrl.GetBool("try")
@@ -152,6 +163,12 @@ func (ctrl *LevelController) Post() {
 		_, err := myOrm.UpdateLevel(level_id, try, pass, thumb);
 		if err != nil {
 			fmt.Errorf("insert level fail, %v", err)
+		}
+	} else if delete{
+		level_id, _ := ctrl.GetInt("level_id")
+		_, err := myOrm.DeleteLevel(level_id)
+		if err != nil {
+			fmt.Errorf("delete level fail, %v", err)
 		}
 	} else {
 		tryNum, _ := ctrl.GetInt("try_num")

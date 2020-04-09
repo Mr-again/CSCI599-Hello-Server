@@ -88,7 +88,7 @@ func (myOrm MyOrm) GetUsersByTotalScore(totalScore int) ([]models.User, error) {
 func (myOrm MyOrm) GetLevelByMakerId(makerId int) ([]models.Level, error) {
 	o := myOrm.O
 	var level []models.Level
-	_, err := o.QueryTable("level").Filter("maker_id", makerId).All(&level)
+	_, err := o.QueryTable("level").Filter("id_of_maker", makerId).All(&level)
 	if err != nil {
 		fmt.Errorf("get level by maker id fail: %v", err)
 	}
@@ -112,6 +112,16 @@ func (myOrm MyOrm) GetLevelsByLevelId(levelId int) (models.Level, error) {
 	//if err != nil {
 	//	fmt.Errorf("do not exist this user with id %d: %v", level.Maker.UserId, err)
 	//}
+	return level, err
+}
+
+func (myOrm MyOrm) GetAllLevels() ([]models.Level, error) {
+	o := myOrm.O
+	var level []models.Level
+	_, err := o.QueryTable("level").All(&level)
+	if err != nil {
+		fmt.Errorf("get all levels fail: %v", err)
+	}
 	return level, err
 }
 
@@ -165,6 +175,18 @@ func (myOrm MyOrm) UpdateLevel(level_id int, try bool, pass bool, thumb bool) (m
 		_, err := o.Update(&level)
 		if err != nil {
 			fmt.Errorf("update level by level id fail: %v", err)
+		}
+	}
+	return level, nil
+}
+
+func (myOrm MyOrm) DeleteLevel(level_id int) (models.Level, error) {
+	o := myOrm.O
+	level := models.Level{LevelId:level_id}
+	if o.Read(&level) == nil{
+		_, err := o.Delete(&level)
+		if err != nil {
+			fmt.Errorf("delete level by level id fail: %v", err)
 		}
 	}
 	return level, nil
