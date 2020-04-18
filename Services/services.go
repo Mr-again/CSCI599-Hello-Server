@@ -159,8 +159,11 @@ func (ctrl *LevelController) Post() {
 		try, _ := ctrl.GetBool("try")
 		pass, _ := ctrl.GetBool("pass")
 		thumb, _ := ctrl.GetBool("thumb")
+		oneStarStep, _ := ctrl.GetInt("one_star_step")
+		twoStarStep, _ := ctrl.GetInt("two_star_step")
+		threeStarStep, _ := ctrl.GetInt("three_star_step")
 		fmt.Print(level_id, try, pass, thumb)
-		_, err := myOrm.UpdateLevel(level_id, try, pass, thumb);
+		_, err := myOrm.UpdateLevel(level_id, try, pass, thumb, oneStarStep, twoStarStep, threeStarStep)
 		if err != nil {
 			fmt.Errorf("insert level fail, %v", err)
 		}
@@ -176,10 +179,13 @@ func (ctrl *LevelController) Post() {
 		thumbNum, _ := ctrl.GetInt("thumb_num")
 		makerId, _ := ctrl.GetInt("id_of_maker")
 		mapData := ctrl.GetString("map_data")
+		oneStarStep, _ := ctrl.GetInt("one_star_step")
+		twoStarStep, _ := ctrl.GetInt("two_star_step")
+		threeStarStep, _ := ctrl.GetInt("three_star_step")
 		if mapData == ""{
 			mapData = "No Data"
 		}
-		_, err := myOrm.AddLevel(tryNum, passNum, thumbNum, makerId, mapData)
+		_, err := myOrm.AddLevel(tryNum, passNum, thumbNum, makerId, mapData, oneStarStep, twoStarStep, threeStarStep)
 		if err != nil {
 			fmt.Errorf("insert level fail, %v", err)
 		}

@@ -134,9 +134,9 @@ func (myOrm MyOrm) AddUser(userName string, macAddr string, money int,
 	return user, err
 }
 
-func (myOrm MyOrm) AddLevel(tryNum int, passNum int, thumbNum int, makerId int, mapData string) (models.Level, error) {
+func (myOrm MyOrm) AddLevel(tryNum int, passNum int, thumbNum int, makerId int, mapData string, oneStarStep int, twoStarStep int, threeStarStep int) (models.Level, error) {
 	o := myOrm.O
-	level := models.Level{TryNum:tryNum, PassNum:passNum, ThumbNum:thumbNum, MapData:mapData, IdOfMaker:makerId}
+	level := models.Level{TryNum:tryNum, PassNum:passNum, ThumbNum:thumbNum, MapData:mapData, IdOfMaker:makerId, OneStarStep:oneStarStep, TwoStarStep:twoStarStep, ThreeStarStep:threeStarStep}
 	//myOrm.UpdateUser(makerId, 0, 0, 0, 0, -1)
 	_, err := o.Insert(&level)
 	return level, err
@@ -159,7 +159,7 @@ func (myOrm MyOrm) UpdateUser(user_id int, money int, build_score int, game_scor
 	return user, nil
 }
 
-func (myOrm MyOrm) UpdateLevel(level_id int, try bool, pass bool, thumb bool) (models.Level, error) {
+func (myOrm MyOrm) UpdateLevel(level_id int, try bool, pass bool, thumb bool, oneStarStep int, twoStarStep int, threeStarStep int) (models.Level, error) {
 	o := myOrm.O
 	level := models.Level{LevelId:level_id}
 	if o.Read(&level) == nil{
@@ -171,6 +171,15 @@ func (myOrm MyOrm) UpdateLevel(level_id int, try bool, pass bool, thumb bool) (m
 		}
 		if thumb{
 			level.ThumbNum++
+		}
+		if oneStarStep != 0 {
+			level.OneStarStep = oneStarStep
+		}
+		if twoStarStep != 0 {
+			level.TwoStarStep = twoStarStep
+		}
+		if threeStarStep != 0 {
+			level.ThreeStarStep = threeStarStep
 		}
 		_, err := o.Update(&level)
 		if err != nil {

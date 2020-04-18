@@ -24,6 +24,9 @@ type Level struct {
 	IdOfMaker  int
 	//Maker    *User `orm:"rel(fk)"`
 	MapData  string
+	OneStarStep int
+	TwoStarStep int
+	ThreeStarStep int
 }
 
 
