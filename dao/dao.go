@@ -134,7 +134,7 @@ func (myOrm MyOrm) AddUser(userName string, macAddr string, money int,
 	return user, err
 }
 
-func (myOrm MyOrm) AddLevel(tryNum int, passNum int, thumbNum int, makerId int,
+func (myOrm MyOrm) AddLevel(tryNum int, passNum int, thumbNum int, makerId string,
 	mapData string, oneStarStep int, twoStarStep int, threeStarStep int, levelName string) (models.Level, error) {
 	o := myOrm.O
 	level := models.Level{TryNum:tryNum, PassNum:passNum, ThumbNum:thumbNum,
