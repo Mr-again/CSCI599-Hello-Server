@@ -27,6 +27,7 @@ type Level struct {
 	OneStarStep int
 	TwoStarStep int
 	ThreeStarStep int
+	LevelName string
 }
 
 

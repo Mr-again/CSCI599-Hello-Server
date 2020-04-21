@@ -179,10 +179,12 @@ func (ctrl *LevelController) Get() {
 				oneStarStep, _ := ctrl.GetInt("one_star_step")
 				twoStarStep, _ := ctrl.GetInt("two_star_step")
 				threeStarStep, _ := ctrl.GetInt("three_star_step")
+				levelName := ctrl.GetString("level_name")
 				if mapData == ""{
 					mapData = "No Data"
 				}
-				level, err := myOrm.AddLevel(tryNum, passNum, thumbNum, makerId, mapData, oneStarStep, twoStarStep, threeStarStep)
+				level, err := myOrm.AddLevel(tryNum, passNum, thumbNum,
+					makerId, mapData, oneStarStep, twoStarStep, threeStarStep, levelName)
 				if err != nil {
 					fmt.Errorf("insert level fail, %v", err)
 				}
@@ -229,10 +231,12 @@ func (ctrl *LevelController) Post() {
 		oneStarStep, _ := ctrl.GetInt("one_star_step")
 		twoStarStep, _ := ctrl.GetInt("two_star_step")
 		threeStarStep, _ := ctrl.GetInt("three_star_step")
+		level_name := ctrl.GetString("level_name")
 		if mapData == ""{
 			mapData = "No Data"
 		}
-		_, err := myOrm.AddLevel(tryNum, passNum, thumbNum, makerId, mapData, oneStarStep, twoStarStep, threeStarStep)
+		_, err := myOrm.AddLevel(tryNum, passNum, thumbNum, makerId,
+			mapData, oneStarStep, twoStarStep, threeStarStep, level_name)
 		if err != nil {
 			fmt.Errorf("insert level fail, %v", err)
 		}
