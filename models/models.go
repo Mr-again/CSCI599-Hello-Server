@@ -21,14 +21,27 @@ type Level struct {
 	TryNum   int
 	PassNum  int
 	ThumbNum int
-	IdOfMaker  string
+	IdOfMaker  int
 	//Maker    *User `orm:"rel(fk)"`
 	MapData  string
 	OneStarStep int
 	TwoStarStep int
 	ThreeStarStep int
 	LevelName string
-	//LevelImage string
+}
+
+type LevelWithImage struct {
+	LevelId  int
+	TryNum   int
+	PassNum  int
+	ThumbNum int
+	IdOfMaker  int
+	MapData  string
+	OneStarStep int
+	TwoStarStep int
+	ThreeStarStep int
+	LevelName string
+	Pic []byte
 }
 
 
